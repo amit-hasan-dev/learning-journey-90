@@ -336,3 +336,95 @@ updateAuthView = function(session) {
 };
 
 // ===== END SIDEBAR FUNCTIONALITY =====
+// ===== PROFILE DATA LOADING =====
+
+let profileLoadRequest = 0;
+
+async function loadUserProfile(session) {
+  const requestId = ++profileLoadRequest;
+
+  const profileFields = {
+    profileAvatar: "A",
+    profileDisplayName: "Your Name",
+    profileEmail: "Email address",
+    profileFullName: "Not set",
+    profileName: "Not set",
+    profileBio: "Not set",
+    profileCountry: "Not set",
+    profileProvider: "Loading...",
+    profileVerification: "Loading...",
+    profileStatus: "Loading..."
+  };
+
+  if (!session) {
+    Object.entries(profileFields).forEach(([id, value]) => {
+      document.getElementById(id).textContent = value;
+    });
+    return;
+  }
+
+  const user = session.user;
+
+  const { data, error } = await supabaseClient
+    .from("profiles")
+    .select("full_name, display_name, bio, country, avatar_path")
+    .eq("id", user.id)
+    .maybeSingle();
+
+  if (requestId !== profileLoadRequest) return;
+
+  if (error) {
+    console.error("Profile loading error:", error);
+    document.getElementById("profileStatus").textContent =
+      "Unable to load";
+    return;
+  }
+
+  const fullName =
+    data?.full_name || user.user_metadata?.full_name ||
+    user.user_metadata?.name || "";
+
+  const displayName =
+    data?.display_name || fullName || user.email || "User";
+
+  document.getElementById("profileAvatar").textContent =
+    displayName.trim().charAt(0).toUpperCase() || "A";
+
+  document.getElementById("profileDisplayName").textContent =
+    displayName;
+
+  document.getElementById("profileEmail").textContent =
+    user.email || "No email available";
+
+  document.getElementById("profileFullName").textContent =
+    fullName || "Not set";
+
+  document.getElementById("profileName").textContent =
+    displayName || "Not set";
+
+  document.getElementById("profileBio").textContent =
+    data?.bio || "Not set";
+
+  document.getElementById("profileCountry").textContent =
+    data?.country || "Not set";
+
+  const provider = user.app_metadata?.provider || "email";
+
+  document.getElementById("profileProvider").textContent =
+    provider === "google" ? "Google" : "Email / Password";
+
+  document.getElementById("profileVerification").textContent =
+    user.email_confirmed_at ? "Verified" : "Not verified";
+
+  document.getElementById("profileStatus").textContent =
+    "Active";
+}
+
+const previousAuthView = updateAuthView;
+
+updateAuthView = function(session) {
+  previousAuthView(session);
+  loadUserProfile(session);
+};
+
+// ===== END PROFILE DATA LOADING =====

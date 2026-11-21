@@ -5,7 +5,35 @@
     <button id="install" hidden>＋ Install</button>
     <button id="logout" class="secondary" hidden>Logout</button>
   </div>
-</header><main><section id="authGate" class="auth-gate">
+</header>
+
+<!-- ===== APP SIDEBAR ===== -->
+<button
+  type="button"
+  id="sidebarToggle"
+  class="sidebar-toggle"
+  aria-label="Open sidebar"
+  aria-expanded="false"
+>
+  ☰
+</button>
+
+<div id="sidebarOverlay" class="sidebar-overlay" hidden></div>
+
+<aside id="appSidebar" class="app-sidebar">
+  <div class="sidebar-heading">
+    <strong>My Workspace</strong>
+    <button type="button" id="sidebarClose" aria-label="Close sidebar">×</button>
+  </div>
+
+  <button type="button" id="sidebarProfileLink" class="sidebar-profile-link">
+    <span>◉</span>
+    <span>My Profile</span>
+  </button>
+</aside>
+<!-- ===== END APP SIDEBAR ===== -->
+
+<main><section id="authGate" class="auth-gate">
   <article class="panel auth-panel">
     <h2>Welcome to Learning Journey 90</h2>
     <p class="muted">Sign in to access your personal learning space.</p>

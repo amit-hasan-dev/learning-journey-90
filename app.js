@@ -710,6 +710,19 @@ saveProfilePicture.addEventListener("click", async () => {
       );
     });
 
+        const { data: bucketCheckData, error: bucketCheckError } =
+      await supabaseClient.storage
+        .from("avatars")
+        .list(user.id, { limit: 1 });
+
+    alert(JSON.stringify({
+      bucketAccessible: !bucketCheckError,
+      itemsFound: bucketCheckData?.length ?? null,
+      error: bucketCheckError?.message || null
+    }));
+
+    return;
+    
     const filePath =
       `${user.id}/avatar-${Date.now()}.jpg`;
 

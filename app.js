@@ -28,3 +28,73 @@ $("#export").onclick=()=>{let a=document.createElement("a"),u=URL.createObjectUR
 $("#import").onchange=async e=>{try{let v=JSON.parse(await e.target.files[0].text());if(!Array.isArray(v.done))throw 0;S={...S,...v};localStorage.setItem(key,JSON.stringify(S));render();toast("Backup imported")}catch{toast("Invalid backup file")}};
 let promptInstall;addEventListener("beforeinstallprompt",e=>{e.preventDefault();promptInstall=e;$("#install").hidden=false});$("#install").onclick=async()=>{if(promptInstall){promptInstall.prompt();await promptInstall.userChoice;promptInstall=null}else toast("Browser menu → Add to Home screen")};
 if("serviceWorker"in navigator)addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));render();
+// ===== SUPABASE AUTHENTICATION SETUP =====
+
+const rememberMeInput = document.getElementById("rememberMe");
+
+const authStorage = {
+  getItem(key) {
+    const storage = rememberMeInput.checked
+      ? localStorage
+      : sessionStorage;
+    return storage.getItem(key);
+  },
+
+  setItem(key, value) {
+    const storage = rememberMeInput.checked
+      ? localStorage
+      : sessionStorage;
+
+    const otherStorage = rememberMeInput.checked
+      ? sessionStorage
+      : localStorage;
+
+    otherStorage.removeItem(key);
+    storage.setItem(key, value);
+  },
+
+  removeItem(key) {
+    localStorage.removeItem(key);
+    sessionStorage.removeItem(key);
+  }
+};
+
+const supabaseClient = window.supabase.createClient(
+  window.LJ90_CONFIG.SUPABASE_URL,
+  window.LJ90_CONFIG.SUPABASE_PUBLISHABLE_KEY,
+  {
+    auth: {
+      storage: authStorage,
+      persistSession: true,
+      autoRefreshToken: true,
+      detectSessionInUrl: true
+    }
+  }
+);
+
+function updateAuthView(session) {
+  const authGate = document.getElementById("authGate");
+  authGate.hidden = !!session;
+
+  document.querySelectorAll("main > *").forEach(element => {
+    if (element.id !== "authGate") {
+      element.hidden = !session;
+    }
+  });
+}
+
+supabaseClient.auth.getSession().then(({ data, error }) => {
+  if (error) {
+    console.error("Session error:", error);
+    updateAuthView(null);
+    return;
+  }
+
+  updateAuthView(data.session);
+});
+
+supabaseClient.auth.onAuthStateChange((_event, session) => {
+  updateAuthView(session);
+});
+
+// ===== END AUTHENTICATION SETUP =====

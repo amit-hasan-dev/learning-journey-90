@@ -204,3 +204,25 @@ logoutButton.addEventListener("click", async () => {
 });
 
 // ===== END LOGOUT FUNCTION =====
+// ===== PASSWORD RECOVERY =====
+
+document.getElementById("forgotPassword").addEventListener("click", async () => {
+  const email = document.getElementById("authEmail").value.trim();
+
+  if (!email) {
+    authMessage.textContent = "Please enter your email address first.";
+    return;
+  }
+
+  authMessage.textContent = "Sending password recovery email...";
+
+  const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
+    redirectTo: window.location.origin + window.location.pathname
+  });
+
+  authMessage.textContent = error
+    ? error.message
+    : "Password recovery email sent. Please check your inbox.";
+});
+
+// ===== END PASSWORD RECOVERY =====

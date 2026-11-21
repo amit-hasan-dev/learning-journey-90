@@ -390,6 +390,36 @@ async function loadUserProfile(session) {
   document.getElementById("profileAvatar").textContent =
     displayName.trim().charAt(0).toUpperCase() || "A";
 
+  // ===== LOAD SAVED PROFILE PICTURE =====
+
+if (data?.avatar_path) {
+  const { data: avatarData, error: avatarError } =
+    await supabaseClient
+      .storage
+      .from("avatars")
+      .createSignedUrl(data.avatar_path, 3600);
+
+  if (requestId !== profileLoadRequest) return;
+
+  if (avatarError) {
+    console.error("Avatar loading error:", avatarError);
+  } else if (avatarData?.signedUrl) {
+    const avatar = document.getElementById("profileAvatar");
+    const image = document.createElement("img");
+
+    image.src = avatarData.signedUrl;
+    image.alt = "Profile picture";
+    image.style.width = "100%";
+    image.style.height = "100%";
+    image.style.objectFit = "cover";
+    image.style.borderRadius = "50%";
+
+    avatar.replaceChildren(image);
+  }
+}
+
+// ===== END LOAD SAVED PROFILE PICTURE =====
+  
   document.getElementById("profileDisplayName").textContent =
     displayName;
 

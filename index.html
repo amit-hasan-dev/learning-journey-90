@@ -96,7 +96,60 @@
 <article class="panel"><h3>GitHub tracker</h3><label>Repository URL<input id="github" placeholder="https://github.com/username/Python-Learning-Journey"></label><button class="secondary" id="saveGithub">Save repository</button><div id="githubLink"></div><label class="check"><input type="checkbox" id="uploaded"> Today's work uploaded to GitHub</label></article>
 <article class="panel"><h3>Quiz & assessment</h3><p class="muted">Ask GPT can quiz you on the selected lesson, one question at a time.</p><button class="secondary" id="quiz">Ask GPT to quiz me ↗</button></article>
 <article class="panel"><h3>Backup & settings</h3><p class="muted">Notes and progress are saved in this browser on this device. Export a backup before clearing browser data.</p><button class="secondary" id="export">Export backup</button><label>Import backup<input type="file" id="import" accept="application/json"></label></article>
-</section><footer>Made for consistent learning, not rushed learning. <b>Keep showing up.</b></footer></main><div id="toast"></div>
+
+</section>
+
+<!-- ===== USER PROFILE: OVERVIEW ===== -->
+<section id="profile" class="view">
+  <div class="heading">
+    <div>
+      <small>YOUR ACCOUNT</small>
+      <h2>My Profile</h2>
+    </div>
+  </div>
+
+  <article class="panel">
+    <h3>Profile Overview</h3>
+
+    <div id="profileAvatar">A</div>
+
+    <h3 id="profileDisplayName">Your Name</h3>
+    <p id="profileEmail" class="muted">Email address</p>
+
+    <button type="button" class="secondary" id="editProfile">
+      Edit Profile
+    </button>
+  </article>
+
+  <article class="panel">
+    <h3>Personal Information</h3>
+    <p>Full Name: <strong id="profileFullName">Not set</strong></p>
+    <p>Display Name: <strong id="profileName">Not set</strong></p>
+    <p>Bio: <span id="profileBio">Not set</span></p>
+    <p>Country: <span id="profileCountry">Not set</span></p>
+  </article>
+
+  <article class="panel">
+    <h3>Account Information</h3>
+    <p>Account Provider: <span id="profileProvider">Loading...</span></p>
+    <p>Email Verification: <span id="profileVerification">Loading...</span></p>
+    <p>Account Status: <span id="profileStatus">Loading...</span></p>
+  </article>
+
+  <article class="panel">
+    <h3>Profile Settings</h3>
+    <button type="button" class="link" id="accountSecurityButton">
+      Account & Security →
+    </button>
+    <button type="button" class="link" id="profilePreferencesButton">
+      Preferences →
+    </button>
+  </article>
+</section>
+<!-- ===== END USER PROFILE: OVERVIEW ===== -->
+
+<footer>
+Made for consistent learning, not rushed learning. <b>Keep showing up.</b></footer></main><div id="toast"></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="config.js"></script>
 <script src="app.js"></script>

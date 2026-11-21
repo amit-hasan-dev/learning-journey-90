@@ -396,7 +396,7 @@ if (data?.avatar_path) {
   const { data: avatarData, error: avatarError } =
     await supabaseClient
       .storage
-      .from("avatars")
+      .from("avatars-test")
       .createSignedUrl(data.avatar_path, 3600);
 
   if (requestId !== profileLoadRequest) return;
@@ -731,9 +731,7 @@ saveProfilePicture.addEventListener("click", async () => {
         error: uploadError.error
       }));
     }
-        alert("TEST UPLOAD SUCCESS");
-    return;
-    
+        
     uploadedPath = filePath;
 
     const { error: updateError } = await supabaseClient
@@ -749,7 +747,7 @@ saveProfilePicture.addEventListener("click", async () => {
     const { data: signedData, error: signedError } =
       await supabaseClient
         .storage
-        .from("avatars")
+        .from("avatars-test")
         .createSignedUrl(filePath, 3600);
 
     if (!signedError && signedData?.signedUrl) {
@@ -779,7 +777,7 @@ saveProfilePicture.addEventListener("click", async () => {
     if (uploadedPath) {
       await supabaseClient
         .storage
-        .from("avatars")
+        .from("avatars-test")
         .remove([uploadedPath]);
     }
 

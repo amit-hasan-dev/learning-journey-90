@@ -171,3 +171,21 @@ const confirmPassword = document.getElementById("confirmPassword").value;
 });
 
 // ===== END EMAIL AUTHENTICATION =====
+// ===== GOOGLE AUTHENTICATION =====
+
+document.getElementById("googleLogin").addEventListener("click", async () => {
+  authMessage.textContent = "Connecting to Google...";
+
+  const { error } = await supabaseClient.auth.signInWithOAuth({
+    provider: "google",
+    options: {
+      redirectTo: window.location.origin + window.location.pathname
+    }
+  });
+
+  if (error) {
+    authMessage.textContent = error.message;
+  }
+});
+
+// ===== END GOOGLE AUTHENTICATION =====

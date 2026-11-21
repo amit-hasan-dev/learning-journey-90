@@ -189,3 +189,18 @@ document.getElementById("googleLogin").addEventListener("click", async () => {
 });
 
 // ===== END GOOGLE AUTHENTICATION =====
+// ===== LOGOUT FUNCTION =====
+
+const logoutButton = document.getElementById("logout");
+
+logoutButton.addEventListener("click", async () => {
+  if (!confirm("Are you sure you want to log out?")) return;
+
+  const { error } = await supabaseClient.auth.signOut();
+
+  if (error) {
+    authMessage.textContent = error.message;
+  }
+});
+
+// ===== END LOGOUT FUNCTION =====

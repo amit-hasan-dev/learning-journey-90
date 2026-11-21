@@ -539,3 +539,81 @@ editProfileForm.addEventListener("submit", async (event) => {
 });
 
 // ===== END SAVE PROFILE CHANGES =====
+// ===== PROFILE PICTURE SELECTION AND EDITOR =====
+
+const chooseProfilePhoto = document.getElementById("chooseProfilePhoto");
+const takeProfilePhoto = document.getElementById("takeProfilePhoto");
+const profileGalleryInput = document.getElementById("profileGalleryInput");
+const profileCameraInput = document.getElementById("profileCameraInput");
+const profilePictureEditor = document.getElementById("profilePictureEditor");
+const profilePicturePreviewImage = document.getElementById("profilePicturePreviewImage");
+const profilePictureZoom = document.getElementById("profilePictureZoom");
+const rotateProfilePicture = document.getElementById("rotateProfilePicture");
+const cancelProfilePicture = document.getElementById("cancelProfilePicture");
+
+let selectedProfilePicture = null;
+let profilePictureRotation = 0;
+
+chooseProfilePhoto.addEventListener("click", () => {
+  profileGalleryInput.click();
+});
+
+takeProfilePhoto.addEventListener("click", () => {
+  profileCameraInput.click();
+});
+
+function handleProfilePictureSelection(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
+
+  if (!allowedTypes.includes(file.type)) {
+    alert("Please select a JPG, PNG, or WebP image.");
+    event.target.value = "";
+    return;
+  }
+
+  if (file.size > 5 * 1024 * 1024) {
+    alert("Image size must be 5 MB or less.");
+    event.target.value = "";
+    return;
+  }
+
+  selectedProfilePicture = file;
+  profilePictureRotation = 0;
+  profilePictureZoom.value = 1;
+
+  const imageURL = URL.createObjectURL(file);
+  profilePicturePreviewImage.src = imageURL;
+  profilePicturePreviewImage.style.transform = "scale(1) rotate(0deg)";
+
+  profilePictureEditor.hidden = false;
+}
+
+profileGalleryInput.addEventListener("change", handleProfilePictureSelection);
+profileCameraInput.addEventListener("change", handleProfilePictureSelection);
+
+profilePictureZoom.addEventListener("input", () => {
+  const zoom = profilePictureZoom.value;
+  profilePicturePreviewImage.style.transform =
+    `scale(${zoom}) rotate(${profilePictureRotation}deg)`;
+});
+
+rotateProfilePicture.addEventListener("click", () => {
+  profilePictureRotation = (profilePictureRotation + 90) % 360;
+
+  profilePicturePreviewImage.style.transform =
+    `scale(${profilePictureZoom.value}) rotate(${profilePictureRotation}deg)`;
+});
+
+cancelProfilePicture.addEventListener("click", () => {
+  profilePictureEditor.hidden = true;
+  profilePicturePreviewImage.removeAttribute("src");
+  selectedProfilePicture = null;
+  profilePictureRotation = 0;
+  profileGalleryInput.value = "";
+  profileCameraInput.value = "";
+});
+
+// ===== END PROFILE PICTURE SELECTION AND EDITOR =====

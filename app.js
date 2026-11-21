@@ -617,3 +617,138 @@ cancelProfilePicture.addEventListener("click", () => {
 });
 
 // ===== END PROFILE PICTURE SELECTION AND EDITOR =====
+// ===== SAVE PROFILE PICTURE TO SUPABASE =====
+
+const saveProfilePicture = document.getElementById("saveProfilePicture");
+
+saveProfilePicture.addEventListener("click", async () => {
+  if (!selectedProfilePicture) {
+    alert("Please select a picture first.");
+    return;
+  }
+
+  saveProfilePicture.disabled = true;
+  saveProfilePicture.textContent = "Saving...";
+
+  let uploadedPath = null;
+
+  try {
+    const { data: userData, error: userError } =
+      await supabaseClient.auth.getUser();
+
+    if (userError || !userData.user) {
+      throw new Error("Please sign in again.");
+    }
+
+    const user = userData.user;
+    const bitmap = await createImageBitmap(selectedProfilePicture);
+
+    const canvas = document.createElement("canvas");
+    const size = 512;
+
+    canvas.width = size;
+    canvas.height = size;
+
+    const context = canvas.getContext("2d");
+
+    const zoom = Number(profilePictureZoom.value);
+    const scale = Math.max(
+      size / bitmap.width,
+      size / bitmap.height
+    ) * zoom;
+
+    context.translate(size / 2, size / 2);
+    context.rotate(profilePictureRotation * Math.PI / 180);
+
+    context.drawImage(
+      bitmap,
+      -(bitmap.width * scale) / 2,
+      -(bitmap.height * scale) / 2,
+      bitmap.width * scale,
+      bitmap.height * scale
+    );
+
+    bitmap.close();
+
+    const optimizedBlob = await new Promise((resolve, reject) => {
+      canvas.toBlob(
+        blob => blob ? resolve(blob) : reject(
+          new Error("Image processing failed.")
+        ),
+        "image/jpeg",
+        0.85
+      );
+    });
+
+    const filePath =
+      `${user.id}/avatar-${Date.now()}.jpg`;
+
+    const { error: uploadError } = await supabaseClient
+      .storage
+      .from("avatars")
+      .upload(filePath, optimizedBlob, {
+        contentType: "image/jpeg",
+        cacheControl: "3600",
+        upsert: false
+      });
+
+    if (uploadError) throw uploadError;
+
+    uploadedPath = filePath;
+
+    const { error: updateError } = await supabaseClient
+      .from("profiles")
+      .update({
+        avatar_path: filePath,
+        updated_at: new Date().toISOString()
+      })
+      .eq("id", user.id);
+
+    if (updateError) throw updateError;
+
+    const { data: signedData, error: signedError } =
+      await supabaseClient
+        .storage
+        .from("avatars")
+        .createSignedUrl(filePath, 3600);
+
+    if (!signedError && signedData?.signedUrl) {
+      const avatar = document.getElementById("profileAvatar");
+      const image = document.createElement("img");
+
+      image.src = signedData.signedUrl;
+      image.alt = "Profile picture";
+      image.style.width = "100%";
+      image.style.height = "100%";
+      image.style.objectFit = "cover";
+      image.style.borderRadius = "50%";
+
+      avatar.replaceChildren(image);
+    }
+
+    profilePictureEditor.hidden = true;
+    selectedProfilePicture = null;
+    profileGalleryInput.value = "";
+    profileCameraInput.value = "";
+
+    alert("Profile picture saved successfully!");
+
+  } catch (error) {
+    console.error("Profile picture save error:", error);
+
+    if (uploadedPath) {
+      await supabaseClient
+        .storage
+        .from("avatars")
+        .remove([uploadedPath]);
+    }
+
+    alert(error.message || "Unable to save profile picture.");
+
+  } finally {
+    saveProfilePicture.disabled = false;
+    saveProfilePicture.textContent = "Save Picture";
+  }
+});
+
+// ===== END SAVE PROFILE PICTURE TO SUPABASE =====

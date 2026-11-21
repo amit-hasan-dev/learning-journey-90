@@ -381,3 +381,10 @@ main {
 }
 
 /* ===== END HIDE PROFILE FILE INPUTS ===== */
+/* ===== REMOVE PROFILE BUTTON SPACING ===== */
+
+#removeProfilePicture {
+  margin-bottom: 16px;
+}
+
+/* ===== END REMOVE PROFILE BUTTON SPACING ===== */

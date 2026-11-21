@@ -88,7 +88,7 @@ const supabaseClient = window.supabase.createClient(
 
 function updateAuthView(session) {
   const authGate = document.getElementById("authGate");
-  authGate.hidden = !!session;
+  authGate.hidden = !!session;document.getElementById("logout").hidden = !session;
 
   document.querySelectorAll("main > *").forEach(element => {
     if (element.id !== "authGate") {

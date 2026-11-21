@@ -277,3 +277,62 @@ passwordResetForm.addEventListener("submit", async (event) => {
 });
 
 // ===== END PASSWORD RESET FUNCTIONALITY =====
+// ===== SIDEBAR FUNCTIONALITY =====
+
+const appSidebar = document.getElementById("appSidebar");
+const sidebarToggle = document.getElementById("sidebarToggle");
+const sidebarClose = document.getElementById("sidebarClose");
+const sidebarOverlay = document.getElementById("sidebarOverlay");
+const sidebarProfileLink = document.getElementById("sidebarProfileLink");
+
+// Keep sidebar hidden until authentication is confirmed.
+appSidebar.hidden = true;
+sidebarToggle.hidden = true;
+
+function closeSidebar() {
+  document.body.classList.remove("sidebar-open");
+  sidebarOverlay.hidden = true;
+  sidebarToggle.setAttribute("aria-expanded", "false");
+  sidebarToggle.setAttribute("aria-label", "Open sidebar");
+}
+
+function openSidebar() {
+  if (appSidebar.hidden) return;
+
+  document.body.classList.add("sidebar-open");
+  sidebarOverlay.hidden = false;
+  sidebarToggle.setAttribute("aria-expanded", "true");
+  sidebarToggle.setAttribute("aria-label", "Close sidebar");
+}
+
+sidebarToggle.addEventListener("click", () => {
+  if (document.body.classList.contains("sidebar-open")) {
+    closeSidebar();
+  } else {
+    openSidebar();
+  }
+});
+
+sidebarClose.addEventListener("click", closeSidebar);
+sidebarOverlay.addEventListener("click", closeSidebar);
+
+sidebarProfileLink.addEventListener("click", () => {
+  go("profile");
+  closeSidebar();
+});
+
+// Show sidebar only for authenticated users.
+const originalUpdateAuthView = updateAuthView;
+
+updateAuthView = function(session) {
+  originalUpdateAuthView(session);
+
+  appSidebar.hidden = !session;
+  sidebarToggle.hidden = !session;
+
+  if (!session) {
+    closeSidebar();
+  }
+};
+
+// ===== END SIDEBAR FUNCTIONALITY =====

@@ -285,3 +285,17 @@ main {
 }
 
 /* ===== END RIGHT SIDE SIDEBAR UPDATE ===== */
+/* ===== SIDEBAR BUTTON THEME ===== */
+
+.sidebar-toggle {
+  background: #91d9bd;
+  color: #101c2c;
+  border: 1px solid #91d9bd;
+}
+
+.sidebar-toggle:hover {
+  background: #91d9bd;
+  color: #101c2c;
+}
+
+/* ===== END SIDEBAR BUTTON THEME ===== */

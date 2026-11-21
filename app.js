@@ -145,9 +145,9 @@ loginForm.addEventListener("submit", async (event) => {
 signupForm.addEventListener("submit", async (event) => {
   event.preventDefault();
 
-  const email = document.getElementById("authEmail").value.trim();
-  const password = document.getElementById("authPassword").value;
-  const confirmPassword = document.getElementById("confirmPassword").value;
+  const email = document.getElementById("signupEmail").value.trim();
+const password = document.getElementById("signupPassword").value;
+const confirmPassword = document.getElementById("confirmPassword").value;
 
   if (password !== confirmPassword) {
     authMessage.textContent = "Passwords do not match.";

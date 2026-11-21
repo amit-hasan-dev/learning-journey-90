@@ -98,3 +98,62 @@ supabaseClient.auth.onAuthStateChange((_event, session) => {
 });
 
 // ===== END AUTHENTICATION SETUP =====
+// ===== EMAIL AUTHENTICATION =====
+
+const loginForm = document.getElementById("loginForm");
+const signupForm = document.getElementById("signupForm");
+const authMessage = document.getElementById("authMessage");
+
+document.getElementById("showSignup").onclick = () => {
+  loginForm.hidden = true;
+  signupForm.hidden = false;
+  authMessage.textContent = "Enter your email and password to create an account.";
+};
+
+loginForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  const email = document.getElementById("authEmail").value.trim();
+  const password = document.getElementById("authPassword").value;
+
+  authMessage.textContent = "Signing in...";
+
+  const { error } = await supabaseClient.auth.signInWithPassword({
+    email,
+    password
+  });
+
+  authMessage.textContent = error
+    ? error.message
+    : "Login successful!";
+});
+
+signupForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  const email = document.getElementById("authEmail").value.trim();
+  const password = document.getElementById("authPassword").value;
+  const confirmPassword = document.getElementById("confirmPassword").value;
+
+  if (password !== confirmPassword) {
+    authMessage.textContent = "Passwords do not match.";
+    return;
+  }
+
+  authMessage.textContent = "Creating your account...";
+
+  const { data, error } = await supabaseClient.auth.signUp({
+    email,
+    password
+  });
+
+  if (error) {
+    authMessage.textContent = error.message;
+  } else if (data.session) {
+    authMessage.textContent = "Account created successfully!";
+  } else {
+    authMessage.textContent = "Account created! Please check your email to confirm your account.";
+  }
+});
+
+// ===== END EMAIL AUTHENTICATION =====

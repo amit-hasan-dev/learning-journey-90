@@ -140,7 +140,66 @@
     <h3>Profile Overview</h3>
 
     <div id="profileAvatar">A</div>
+<!-- ===== PROFILE PICTURE CONTROLS ===== -->
+<div id="profilePictureControls">
+  <div class="profile-picture-actions">
+    <button type="button" class="secondary" id="chooseProfilePhoto">
+      Choose from Gallery
+    </button>
 
+    <button type="button" class="secondary" id="takeProfilePhoto">
+      Take a Photo
+    </button>
+  </div>
+
+  <input
+    type="file"
+    id="profileGalleryInput"
+    accept="image/jpeg,image/png,image/webp"
+    hidden
+  >
+
+  <input
+    type="file"
+    id="profileCameraInput"
+    accept="image/*"
+    capture="environment"
+    hidden
+  >
+
+  <div id="profilePictureEditor" hidden>
+    <h4>Adjust Profile Picture</h4>
+
+    <div id="profilePicturePreview">
+      <img id="profilePicturePreviewImage" alt="Profile picture preview">
+    </div>
+
+    <label for="profilePictureZoom">Zoom</label>
+    <input
+      type="range"
+      id="profilePictureZoom"
+      min="1"
+      max="3"
+      step="0.1"
+      value="1"
+    >
+
+    <button type="button" class="secondary" id="rotateProfilePicture">
+      Rotate
+    </button>
+
+    <div class="profile-picture-actions">
+      <button type="button" class="primary" id="saveProfilePicture">
+        Save Picture
+      </button>
+
+      <button type="button" class="secondary" id="cancelProfilePicture">
+        Cancel
+      </button>
+    </div>
+  </div>
+</div>
+<!-- ===== END PROFILE PICTURE CONTROLS ===== -->
     <h3 id="profileDisplayName">Your Name</h3>
     <p id="profileEmail" class="muted">Email address</p>
 

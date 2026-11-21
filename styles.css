@@ -374,3 +374,10 @@ main {
 }
 
 /* ===== END PROFILE PICTURE EDITOR STYLING ===== */
+/* ===== HIDE PROFILE FILE INPUTS ===== */
+
+#profilePictureControls input[hidden] {
+  display: none !important;
+}
+
+/* ===== END HIDE PROFILE FILE INPUTS ===== */

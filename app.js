@@ -428,3 +428,57 @@ updateAuthView = function(session) {
 };
 
 // ===== END PROFILE DATA LOADING =====
+// ===== EDIT PROFILE FORM CONTROLS =====
+
+const editProfileButton = document.getElementById("editProfile");
+const editProfileForm = document.getElementById("editProfileForm");
+const cancelEditProfile = document.getElementById("cancelEditProfile");
+
+editProfileButton.addEventListener("click", async () => {
+  const { data: userData, error: userError } =
+    await supabaseClient.auth.getUser();
+
+  if (userError || !userData.user) {
+    document.getElementById("editProfileMessage").textContent =
+      "Please sign in again.";
+    return;
+  }
+
+  const user = userData.user;
+
+  const { data, error } = await supabaseClient
+    .from("profiles")
+    .select("full_name, display_name, bio, country")
+    .eq("id", user.id)
+    .maybeSingle();
+
+  if (error) {
+    document.getElementById("editProfileMessage").textContent =
+      "Unable to load profile details.";
+    return;
+  }
+
+  document.getElementById("editFullName").value =
+    data?.full_name || user.user_metadata?.full_name ||
+    user.user_metadata?.name || "";
+
+  document.getElementById("editDisplayName").value =
+    data?.display_name || data?.full_name ||
+    user.user_metadata?.full_name || user.user_metadata?.name || "";
+
+  document.getElementById("editBio").value =
+    data?.bio || "";
+
+  document.getElementById("editCountry").value =
+    data?.country || "";
+
+  document.getElementById("editProfileMessage").textContent = "";
+  editProfileForm.hidden = false;
+});
+
+cancelEditProfile.addEventListener("click", () => {
+  editProfileForm.hidden = true;
+  document.getElementById("editProfileMessage").textContent = "";
+});
+
+// ===== END EDIT PROFILE FORM CONTROLS =====

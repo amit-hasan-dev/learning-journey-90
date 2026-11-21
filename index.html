@@ -49,7 +49,35 @@
 
   <button type="submit" class="primary">Create account</button>
     </form>
+<!-- ===== PASSWORD RESET FORM ===== -->
 
+<form id="passwordResetForm" hidden>
+  <h3>Set a new password</h3>
+
+  <label>New password
+    <input
+      type="password"
+      id="newPassword"
+      required
+      minlength="8"
+      placeholder="Enter your new password"
+    >
+  </label>
+
+  <label>Confirm new password
+    <input
+      type="password"
+      id="confirmNewPassword"
+      required
+      minlength="8"
+      placeholder="Confirm your new password"
+    >
+  </label>
+
+  <button type="submit" class="primary">Update password</button>
+</form>
+
+<!-- ===== END PASSWORD RESET FORM ===== -->
     <p id="authMessage" class="muted"></p>
   </article>
 </section>

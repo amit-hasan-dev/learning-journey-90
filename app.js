@@ -32,6 +32,20 @@ if("serviceWorker"in navigator)addEventListener("load",()=>navigator.serviceWork
 
 const rememberMeInput = document.getElementById("rememberMe");
 
+const rememberPreferenceKey = "lj90_remember_me";
+const savedRememberPreference = localStorage.getItem(rememberPreferenceKey);
+
+if (savedRememberPreference !== null) {
+  rememberMeInput.checked = savedRememberPreference === "true";
+}
+
+rememberMeInput.addEventListener("change", () => {
+  localStorage.setItem(
+    rememberPreferenceKey,
+    String(rememberMeInput.checked)
+  );
+});
+
 const authStorage = {
   getItem(key) {
     const storage = rememberMeInput.checked

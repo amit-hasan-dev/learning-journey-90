@@ -715,7 +715,7 @@ saveProfilePicture.addEventListener("click", async () => {
 
     const { error: uploadError } = await supabaseClient
       .storage
-      .from("avatars")
+      .from("avatars-test")
       .upload(filePath, optimizedBlob, {
         contentType: "image/jpeg",
         cacheControl: "3600",
@@ -731,6 +731,9 @@ saveProfilePicture.addEventListener("click", async () => {
         error: uploadError.error
       }));
     }
+        alert("TEST UPLOAD SUCCESS");
+    return;
+    
     uploadedPath = filePath;
 
     const { error: updateError } = await supabaseClient

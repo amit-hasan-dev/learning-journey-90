@@ -1,5 +1,42 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#101c2c"><meta name="description" content="Your personal 90-day learning tracker"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg"><link rel="stylesheet" href="styles.css"><title>Learning Journey 90</title></head><body>
-<header><a class="brand" href="#"><b>LJ</b> Learning Journey <small>90</small></a><button id="install" hidden>＋ Install</button></header><main>
+<header><a class="brand" href="#"><b>LJ</b> Learning Journey <small>90</small></a><button id="install" hidden>＋ Install</button></header><main><section id="authGate" class="auth-gate">
+  <article class="panel auth-panel">
+    <h2>Welcome to Learning Journey 90</h2>
+    <p class="muted">Sign in to access your personal learning space.</p>
+
+    <form id="loginForm">
+      <label>Email address
+        <input type="email" id="authEmail" required placeholder="Enter your email">
+      </label>
+
+      <label>Password
+        <input type="password" id="authPassword" required minlength="8" placeholder="Enter your password">
+      </label>
+
+      <label class="check">
+        <input type="checkbox" id="rememberMe" checked>
+        Remember me
+      </label>
+
+      <button type="submit" class="primary">Sign in</button>
+    </form>
+
+    <button type="button" class="secondary" id="googleLogin">
+      Continue with Google
+    </button>
+
+    <p class="muted">New here? <button type="button" class="link" id="showSignup">Create an account</button></p>
+
+    <form id="signupForm" hidden>
+      <label>Confirm password
+        <input type="password" id="confirmPassword" minlength="8" placeholder="Confirm your password">
+      </label>
+      <button type="submit" class="primary">Create account</button>
+    </form>
+
+    <p id="authMessage" class="muted"></p>
+  </article>
+</section>
 <section class="hero"><small>YOUR PERSONAL LEARNING SPACE</small><h1>Build skills.<br><em>One day at a time.</em></h1><p>Python · Computer Science · Mathematics · Applied AI</p><div class="herofoot"><div><small>COURSE STATUS</small><strong id="status">Not started</strong></div><div><small>START DATE</small><strong id="date">Not set</strong></div><button class="primary" id="start">Start my journey ↗</button></div></section>
 <section class="stats"><article><small>PROGRESS</small><strong id="pct">0%</strong><div class="bar"><i id="bar"></i></div><span id="count">0 of 90 days completed</span></article><article><small>CURRENT STREAK</small><strong id="streak">0 days</strong><span>Completed study days</span></article><article><small>LEARNING PHASES</small><strong>13</strong><span>Structured milestones</span></article></section>
 <nav><button class="tab active" data-tab="overview">Overview</button><button class="tab" data-tab="lessons">Lessons</button><button class="tab" data-tab="tracker">Tracker</button><button class="tab" data-tab="space">My Space</button></nav>

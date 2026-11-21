@@ -147,6 +147,53 @@
     <button type="button" class="secondary" id="editProfile">
       Edit Profile
     </button>
+<!-- ===== EDIT PROFILE FORM ===== -->
+<form id="editProfileForm" class="panel" hidden>
+  <h3>Edit Personal Information</h3>
+
+  <label for="editFullName">Full Name</label>
+  <input
+    type="text"
+    id="editFullName"
+    maxlength="100"
+    placeholder="Enter your full name"
+  >
+
+  <label for="editDisplayName">Display Name</label>
+  <input
+    type="text"
+    id="editDisplayName"
+    maxlength="50"
+    placeholder="Enter your display name"
+    required
+  >
+
+  <label for="editBio">Bio</label>
+  <textarea
+    id="editBio"
+    maxlength="160"
+    rows="3"
+    placeholder="Write something about yourself"
+  ></textarea>
+
+  <label for="editCountry">Country</label>
+  <input
+    type="text"
+    id="editCountry"
+    maxlength="60"
+    placeholder="Enter your country"
+  >
+
+  <div class="profile-form-actions">
+    <button type="submit" class="primary">Save Changes</button>
+    <button type="button" class="secondary" id="cancelEditProfile">
+      Cancel
+    </button>
+  </div>
+
+  <p id="editProfileMessage" class="muted" aria-live="polite"></p>
+</form>
+<!-- ===== END EDIT PROFILE FORM ===== -->
   </article>
 
   <article class="panel">

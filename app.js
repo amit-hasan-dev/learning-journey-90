@@ -722,8 +722,15 @@ saveProfilePicture.addEventListener("click", async () => {
         upsert: false
       });
 
-    if (uploadError) throw uploadError;
-
+    if (uploadError) {
+      throw new Error(JSON.stringify({
+        name: uploadError.name,
+        message: uploadError.message,
+        status: uploadError.status,
+        statusCode: uploadError.statusCode,
+        error: uploadError.error
+      }));
+    }
     uploadedPath = filePath;
 
     const { error: updateError } = await supabaseClient

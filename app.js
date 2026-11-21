@@ -226,3 +226,54 @@ document.getElementById("forgotPassword").addEventListener("click", async () => 
 });
 
 // ===== END PASSWORD RECOVERY =====
+// ===== PASSWORD RESET FUNCTIONALITY =====
+
+const passwordResetForm = document.getElementById("passwordResetForm");
+const googleLoginButton = document.getElementById("googleLogin");
+
+supabaseClient.auth.onAuthStateChange((event) => {
+  if (event === "PASSWORD_RECOVERY") {
+    updateAuthView(null);
+
+    loginForm.hidden = true;
+    signupForm.hidden = true;
+    googleLoginButton.hidden = true;
+    passwordResetForm.hidden = false;
+
+    authMessage.textContent = "Enter and confirm your new password.";
+  }
+});
+
+passwordResetForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  const newPassword = document.getElementById("newPassword").value;
+  const confirmNewPassword = document.getElementById("confirmNewPassword").value;
+
+  if (newPassword !== confirmNewPassword) {
+    authMessage.textContent = "Passwords do not match.";
+    return;
+  }
+
+  authMessage.textContent = "Updating your password...";
+
+  const { error } = await supabaseClient.auth.updateUser({
+    password: newPassword
+  });
+
+  if (error) {
+    authMessage.textContent = error.message;
+    return;
+  }
+
+  passwordResetForm.hidden = true;
+  loginForm.hidden = false;
+  signupForm.hidden = true;
+  googleLoginButton.hidden = false;
+
+  await supabaseClient.auth.signOut();
+
+  authMessage.textContent = "Password updated successfully! Please sign in with your new password.";
+});
+
+// ===== END PASSWORD RESET FUNCTIONALITY =====

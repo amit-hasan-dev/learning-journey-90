@@ -238,3 +238,50 @@ main {
 }
 
 /* ===== END APP SIDEBAR STYLING ===== */
+/* ===== RIGHT SIDE SIDEBAR UPDATE ===== */
+
+/* Desktop sidebar moves to the right */
+.app-sidebar {
+  left: auto;
+  right: 0;
+  border-right: 0;
+  border-left: 1px solid var(--line);
+}
+
+main {
+  margin-left: auto;
+  margin-right: 270px;
+}
+
+/* Mobile drawer opens from the right */
+@media (max-width: 650px) {
+  main {
+    margin: 14px auto;
+  }
+
+  .sidebar-toggle {
+    top: auto;
+    left: auto;
+    right: 18px;
+    bottom: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 23px;
+    z-index: 7;
+  }
+
+  .app-sidebar {
+    left: auto;
+    right: 0;
+    border-left: 1px solid var(--line);
+    border-right: 0;
+    transform: translateX(100%);
+  }
+
+  body.sidebar-open .app-sidebar {
+    transform: translateX(0);
+  }
+}
+
+/* ===== END RIGHT SIDE SIDEBAR UPDATE ===== */

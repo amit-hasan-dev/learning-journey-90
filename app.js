@@ -710,6 +710,20 @@ saveProfilePicture.addEventListener("click", async () => {
       );
     });
 
+    const {
+      data: bucketInfo,
+      error: bucketInfoError
+    } = await supabaseClient.storage.getBucket("avatars");
+
+    alert(JSON.stringify({
+      bucketFound: !!bucketInfo,
+      bucketInfo: bucketInfo,
+      error: bucketInfoError?.message || null,
+      status: bucketInfoError?.status || null
+    }));
+
+    return;
+    
     const filePath =
       `${user.id}/avatar-${Date.now()}.jpg`;
 

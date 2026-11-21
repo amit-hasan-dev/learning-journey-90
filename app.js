@@ -710,24 +710,6 @@ saveProfilePicture.addEventListener("click", async () => {
       );
     });
 
-    const {
-      data: sessionData,
-      error: sessionError
-    } = await supabaseClient.auth.getSession();
-
-    const currentSession = sessionData?.session;
-
-    alert(JSON.stringify({
-      sessionExists: !!currentSession,
-      accessTokenPresent: !!currentSession?.access_token,
-      sessionUserId: currentSession?.user?.id || null,
-      uploadUserId: user.id,
-      sameUser: currentSession?.user?.id === user.id,
-      sessionError: sessionError?.message || null
-    }));
-
-    return;
-    
     const filePath =
       `${user.id}/avatar-${Date.now()}.jpg`;
 

@@ -482,3 +482,60 @@ cancelEditProfile.addEventListener("click", () => {
 });
 
 // ===== END EDIT PROFILE FORM CONTROLS =====
+// ===== SAVE PROFILE CHANGES =====
+
+editProfileForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  const message = document.getElementById("editProfileMessage");
+  const saveButton = editProfileForm.querySelector('button[type="submit"]');
+
+  const fullName = document.getElementById("editFullName").value.trim();
+  const displayName = document.getElementById("editDisplayName").value.trim();
+  const bio = document.getElementById("editBio").value.trim();
+  const country = document.getElementById("editCountry").value.trim();
+
+  if (!displayName) {
+    message.textContent = "Display Name is required.";
+    return;
+  }
+
+  saveButton.disabled = true;
+  message.textContent = "Saving changes...";
+
+  try {
+    const { data: userData, error: userError } =
+      await supabaseClient.auth.getUser();
+
+    if (userError || !userData.user) {
+      throw new Error("Please sign in again.");
+    }
+
+    const user = userData.user;
+
+    const { error } = await supabaseClient
+      .from("profiles")
+      .upsert({
+        id: user.id,
+        full_name: fullName,
+        display_name: displayName,
+        bio: bio,
+        country: country,
+        updated_at: new Date().toISOString()
+      });
+
+    if (error) throw error;
+
+    await loadUserProfile({ user });
+
+    message.textContent = "Profile updated successfully!";
+    editProfileForm.hidden = true;
+  } catch (error) {
+    console.error("Profile save error:", error);
+    message.textContent = error.message || "Unable to save profile.";
+  } finally {
+    saveButton.disabled = false;
+  }
+});
+
+// ===== END SAVE PROFILE CHANGES =====

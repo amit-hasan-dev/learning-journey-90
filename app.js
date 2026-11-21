@@ -390,6 +390,9 @@ async function loadUserProfile(session) {
   document.getElementById("profileAvatar").textContent =
     displayName.trim().charAt(0).toUpperCase() || "A";
 
+    document.getElementById("removeProfilePicture").hidden =
+    !data?.avatar_path;
+  
   // ===== LOAD SAVED PROFILE PICTURE =====
 
 if (data?.avatar_path) {
@@ -790,3 +793,73 @@ saveProfilePicture.addEventListener("click", async () => {
 });
 
 // ===== END SAVE PROFILE PICTURE TO SUPABASE =====
+
+// ===== REMOVE PROFILE PICTURE =====
+
+const removeProfilePictureButton =
+  document.getElementById("removeProfilePicture");
+
+removeProfilePictureButton.addEventListener("click", async () => {
+  if (!confirm("Are you sure you want to remove your profile picture?")) {
+    return;
+  }
+
+  removeProfilePictureButton.disabled = true;
+  removeProfilePictureButton.textContent = "Removing...";
+
+  try {
+    const { data: userData, error: userError } =
+      await supabaseClient.auth.getUser();
+
+    if (userError || !userData.user) {
+      throw new Error("Please sign in again.");
+    }
+
+    const user = userData.user;
+
+    const { data, error } = await supabaseClient
+      .from("profiles")
+      .select("avatar_path")
+      .eq("id", user.id)
+      .maybeSingle();
+
+    if (error) throw error;
+
+    const oldPath = data?.avatar_path;
+
+    const { error: updateError } = await supabaseClient
+      .from("profiles")
+      .update({
+        avatar_path: null,
+        updated_at: new Date().toISOString()
+      })
+      .eq("id", user.id);
+
+    if (updateError) throw updateError;
+
+    if (oldPath) {
+      const { error: deleteError } = await supabaseClient
+        .storage
+        .from("avatars-test")
+        .remove([oldPath]);
+
+      if (deleteError) {
+        console.error("Old avatar cleanup error:", deleteError);
+      }
+    }
+
+    await loadUserProfile({ user });
+
+    alert("Profile picture removed successfully!");
+
+  } catch (error) {
+    console.error("Remove profile picture error:", error);
+    alert(error.message || "Unable to remove profile picture.");
+
+  } finally {
+    removeProfilePictureButton.disabled = false;
+    removeProfilePictureButton.textContent = "Remove Picture";
+  }
+});
+
+// ===== END REMOVE PROFILE PICTURE =====

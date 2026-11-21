@@ -28,10 +28,19 @@
     <p class="muted">New here? <button type="button" class="link" id="showSignup">Create an account</button></p>
 
     <form id="signupForm" hidden>
-      <label>Confirm password
-        <input type="password" id="confirmPassword" minlength="8" placeholder="Confirm your password">
-      </label>
-      <button type="submit" class="primary">Create account</button>
+  <label>Email address
+    <input type="email" id="signupEmail" required placeholder="Enter your email">
+  </label>
+
+  <label>Password
+    <input type="password" id="signupPassword" required minlength="8" placeholder="Create a password">
+  </label>
+
+  <label>Confirm password
+    <input type="password" id="confirmPassword" required minlength="8" placeholder="Confirm your password">
+  </label>
+
+  <button type="submit" class="primary">Create account</button>
     </form>
 
     <p id="authMessage" class="muted"></p>

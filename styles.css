@@ -954,3 +954,47 @@ html[data-theme="dark"] #profilePreferencesButton {
 }
 
 /* ===== END FINAL REMAINING LIQUID GLASS ===== */
+/* ===== EXCLUDE SELECTED ELEMENTS FROM LIQUID GLASS ===== */
+
+/* Keep Forgot Password and Create Account buttons simple */
+
+#forgotPassword,
+#showSignup {
+  background: none;
+  border: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  transform: none;
+}
+
+/* Keep Account & Security and Preferences panels standard */
+
+#account-security .panel,
+#preferences .panel {
+  background: white;
+  border: 1px solid var(--line);
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+html[data-theme="dark"] #account-security .panel,
+html[data-theme="dark"] #preferences .panel {
+  background: #1c2737;
+  border-color: var(--line);
+  box-shadow: none;
+}
+
+/* Keep Profile navigation links simple */
+
+#accountSecurityButton,
+#profilePreferencesButton {
+  background: none;
+  border: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+/* ===== END SELECTED GLASS EXCLUSIONS ===== */

@@ -863,3 +863,93 @@ removeProfilePictureButton.addEventListener("click", async () => {
 });
 
 // ===== END REMOVE PROFILE PICTURE =====
+// ===== ACCOUNT & SECURITY NAVIGATION =====
+
+document
+  .getElementById("accountSecurityButton")
+  .addEventListener("click", () => {
+    go("account-security");
+  });
+
+document
+  .getElementById("backToProfile")
+  .addEventListener("click", () => {
+    go("profile");
+  });
+
+// ===== PROFILE PASSWORD CHANGE =====
+
+const profilePasswordForm =
+  document.getElementById("profilePasswordForm");
+
+const passwordChangeInfo =
+  document.getElementById("passwordChangeInfo");
+
+const profilePasswordMessage =
+  document.getElementById("profilePasswordMessage");
+
+async function checkPasswordProvider() {
+  const { data, error } = await supabaseClient.auth.getUser();
+
+  if (error || !data.user) {
+    passwordChangeInfo.textContent =
+      "Please sign in again to manage your password.";
+    profilePasswordForm.hidden = true;
+    return;
+  }
+
+  const provider = data.user.app_metadata?.provider;
+
+  if (provider === "google") {
+    profilePasswordForm.hidden = true;
+    passwordChangeInfo.textContent =
+      "Your account uses Google sign-in. Manage your password through your Google Account.";
+  } else {
+    profilePasswordForm.hidden = false;
+    passwordChangeInfo.textContent =
+      "Choose a new password with at least 8 characters.";
+  }
+}
+
+checkPasswordProvider();
+
+profilePasswordForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  const newPassword =
+    document.getElementById("profileNewPassword").value;
+
+  const confirmPassword =
+    document.getElementById("profileConfirmPassword").value;
+
+  if (newPassword.length < 8) {
+    profilePasswordMessage.textContent =
+      "Password must be at least 8 characters.";
+    return;
+  }
+
+  if (newPassword !== confirmPassword) {
+    profilePasswordMessage.textContent =
+      "Passwords do not match.";
+    return;
+  }
+
+  profilePasswordMessage.textContent =
+    "Updating password...";
+
+  const { error } = await supabaseClient.auth.updateUser({
+    password: newPassword
+  });
+
+  if (error) {
+    profilePasswordMessage.textContent = error.message;
+    return;
+  }
+
+  profilePasswordForm.reset();
+
+  profilePasswordMessage.textContent =
+    "Password updated successfully!";
+});
+
+// ===== END ACCOUNT & SECURITY =====

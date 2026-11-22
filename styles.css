@@ -390,8 +390,8 @@ main {
 /* ===== END REMOVE PROFILE BUTTON SPACING ===== */
 /* ===== EMAIL UPDATE BUTTON SPACING ===== */
 
-#profileEmailForm button {
-  margin-top: 12px;
+#profileEmailForm #profileNewEmail {
+  margin-bottom: 16px !important;
 }
 
 /* ===== END EMAIL UPDATE BUTTON SPACING ===== */

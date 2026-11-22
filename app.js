@@ -1276,3 +1276,72 @@ deleteAccountPasswordForm.addEventListener("submit", async (event) => {
 });
 
 // ===== END EMAIL VERIFICATION =====
+
+// ===== GOOGLE ACCOUNT DELETION VERIFICATION =====
+
+reauthDeleteGoogle.addEventListener("click", async () => {
+  const message =
+    document.getElementById("deleteAccountReauthMessage");
+
+  const { data, error } = await supabaseClient.auth.getUser();
+
+  if (error || !data.user) {
+    message.textContent = "Please sign in again.";
+    return;
+  }
+
+  if (data.user.app_metadata?.provider !== "google") {
+    message.textContent = "Google account verification is unavailable.";
+    return;
+  }
+
+  sessionStorage.setItem(
+    "lj90_delete_reauth_user",
+    data.user.id
+  );
+
+  message.textContent = "Connecting to Google...";
+
+  const { error: oauthError } =
+    await supabaseClient.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: window.location.origin + window.location.pathname,
+        queryParams: {
+          prompt: "login"
+        }
+      }
+    });
+
+  if (oauthError) {
+    sessionStorage.removeItem("lj90_delete_reauth_user");
+    message.textContent = oauthError.message;
+  }
+});
+
+// Verify Google OAuth return
+supabaseClient.auth.onAuthStateChange(async (event, session) => {
+  if (!["SIGNED_IN", "INITIAL_SESSION"].includes(event)) return;
+
+  const expectedUserId =
+    sessionStorage.getItem("lj90_delete_reauth_user");
+
+  if (!expectedUserId || !session?.user) return;
+
+  if (
+    session.user.id !== expectedUserId ||
+    session.user.app_metadata?.provider !== "google"
+  ) {
+    sessionStorage.removeItem("lj90_delete_reauth_user");
+    document.getElementById("deleteAccountReauthMessage").textContent =
+      "Google account verification failed.";
+    return;
+  }
+
+  sessionStorage.removeItem("lj90_delete_reauth_user");
+
+  document.getElementById("deleteAccountReauthMessage").textContent =
+    "Google identity verified. Further security checks are still required.";
+});
+
+// ===== END GOOGLE VERIFICATION =====

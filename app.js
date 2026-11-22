@@ -1184,3 +1184,51 @@ window.matchMedia("(prefers-color-scheme: dark)")
   });
 
 // ===== END THEME AND ACCENT COLOR SETTINGS =====
+
+// ===== ACCOUNT DELETION: OPEN VERIFICATION PANEL =====
+
+const beginAccountDeletionButton =
+  document.getElementById("beginAccountDeletion");
+
+const accountDeletionReauth =
+  document.getElementById("accountDeletionReauth");
+
+const deleteAccountPasswordForm =
+  document.getElementById("deleteAccountPasswordForm");
+
+const reauthDeleteGoogle =
+  document.getElementById("reauthDeleteGoogle");
+
+const cancelAccountDeletion =
+  document.getElementById("cancelAccountDeletion");
+
+beginAccountDeletionButton.addEventListener("click", async () => {
+  const { data, error } = await supabaseClient.auth.getUser();
+
+  if (error || !data.user) {
+    document.getElementById("deleteAccountMessage").textContent =
+      "Please sign in again before deleting your account.";
+    return;
+  }
+
+  const provider = data.user.app_metadata?.provider || "email";
+
+  accountDeletionReauth.hidden = false;
+  deleteAccountPasswordForm.hidden = provider === "google";
+  reauthDeleteGoogle.hidden = provider !== "google";
+
+  document.getElementById("deleteAccountReauthMessage").textContent =
+    provider === "google"
+      ? "Continue with Google to verify your identity."
+      : "Enter your current password to verify your identity.";
+});
+
+cancelAccountDeletion.addEventListener("click", () => {
+  accountDeletionReauth.hidden = true;
+  deleteAccountPasswordForm.reset();
+
+  document.getElementById("deleteAccountPasswordMessage")?.textContent = "";
+  document.getElementById("deleteAccountReauthMessage").textContent = "";
+});
+
+// ===== END ACCOUNT DELETION PANEL =====

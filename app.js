@@ -1231,3 +1231,48 @@ cancelAccountDeletion.addEventListener("click", () => {
 });
 
 // ===== END ACCOUNT DELETION PANEL =====
+
+// ===== EMAIL ACCOUNT DELETION VERIFICATION =====
+
+deleteAccountPasswordForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  const message =
+    document.getElementById("deleteAccountReauthMessage");
+
+  const password =
+    document.getElementById("deleteAccountPassword").value;
+
+  message.textContent = "Verifying your password...";
+
+  const { data: currentData, error: currentError } =
+    await supabaseClient.auth.getUser();
+
+  if (currentError || !currentData.user) {
+    message.textContent = "Your session expired. Please sign in again.";
+    return;
+  }
+
+  const { data, error } =
+    await supabaseClient.auth.signInWithPassword({
+      email: currentData.user.email,
+      password
+    });
+
+  if (error || !data.user) {
+    message.textContent = "Password verification failed. Please try again.";
+    return;
+  }
+
+  if (data.user.id !== currentData.user.id) {
+    message.textContent = "Account verification failed.";
+    return;
+  }
+
+  deleteAccountPasswordForm.reset();
+
+  message.textContent =
+    "Identity verified successfully. Further security checks are still required.";
+});
+
+// ===== END EMAIL VERIFICATION =====

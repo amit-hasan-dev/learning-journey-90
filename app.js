@@ -1227,7 +1227,6 @@ cancelAccountDeletion.addEventListener("click", () => {
   accountDeletionReauth.hidden = true;
   deleteAccountPasswordForm.reset();
 
-  document.getElementById("deleteAccountPasswordMessage")?.textContent = "";
   document.getElementById("deleteAccountReauthMessage").textContent = "";
 });
 

@@ -395,3 +395,72 @@ main {
 }
 
 /* ===== END EMAIL UPDATE BUTTON SPACING ===== */
+/* ===== DARK THEME FOUNDATION ===== */
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+
+  --bg: #111827;
+  --ink: #e5edf5;
+  --muted: #a0aec0;
+  --line: #344255;
+  --navy: #0b1220;
+  --blue: #8bb8e8;
+  --mint: #65c9a5;
+}
+
+html[data-theme="dark"] body {
+  background: var(--bg);
+  color: var(--ink);
+}
+
+html[data-theme="dark"] header,
+html[data-theme="dark"] .panel,
+html[data-theme="dark"] .stats article,
+html[data-theme="dark"] .phase {
+  background: #1c2737;
+  color: var(--ink);
+  border-color: var(--line);
+}
+
+html[data-theme="dark"] .panel p,
+html[data-theme="dark"] .lesson-text {
+  color: #bdc9d8;
+}
+
+html[data-theme="dark"] .panel input:not([type="checkbox"]),
+html[data-theme="dark"] .panel select,
+html[data-theme="dark"] .panel textarea {
+  background: #111c2b;
+  color: var(--ink);
+  border-color: var(--line);
+}
+
+html[data-theme="dark"] .secondary {
+  background: #29384b;
+  color: #e5edf5;
+  border-color: #46566b;
+}
+
+html[data-theme="dark"] .day {
+  background: #263448;
+  color: #d5dfeb;
+  border-color: var(--line);
+}
+
+html[data-theme="dark"] .day.done {
+  background: #174b3b;
+  color: #a7f0cf;
+  border-color: #367e63;
+}
+
+html[data-theme="dark"] .num {
+  background: #29384b;
+  color: #b9d8f5;
+}
+
+html[data-theme="dark"] footer {
+  color: var(--muted);
+}
+
+/* ===== END DARK THEME FOUNDATION ===== */

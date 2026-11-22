@@ -1023,7 +1023,11 @@ const accentColorPicker =
   document.getElementById("accentColorPicker");
 const accentColorHex =
   document.getElementById("accentColorHex");
+const applyAccentColorButton =
+  document.getElementById("applyAccentColor");
 
+const accentColorMessage =
+  document.getElementById("accentColorMessage");
 const savedTheme =
   localStorage.getItem("lj90-theme") || "system";
 
@@ -1127,14 +1131,45 @@ accentColorPicker.addEventListener("input", () => {
   applyAccentColor(color);
 });
 
+accentColorPicker.addEventListener("input", () => {
+  accentColorHex.value =
+    accentColorPicker.value;
+  accentColorMessage.textContent =
+    "Color selected. Press Set Colour to apply.";
+});
+
 accentColorHex.addEventListener("input", () => {
   const color = accentColorHex.value.trim();
 
   if (/^#[0-9a-fA-F]{6}$/.test(color)) {
     accentColorPicker.value = color;
-    localStorage.setItem("lj90-accent", color);
-    applyAccentColor(color);
+    accentColorMessage.textContent =
+      "Valid color code. Press Set Colour to apply.";
+  } else {
+    accentColorMessage.textContent =
+      "Enter a valid HEX code, e.g. #FF5733.";
   }
+});
+
+applyAccentColorButton.addEventListener("click", () => {
+  const color = accentColorHex.value.trim();
+
+  if (!/^#[0-9a-fA-F]{6}$/.test(color)) {
+    accentColorMessage.textContent =
+      "Invalid HEX code. Please enter a valid color.";
+    return;
+  }
+
+  const finalColor = color.toLowerCase();
+
+  accentColorPicker.value = finalColor;
+  accentColorHex.value = finalColor;
+
+  localStorage.setItem("lj90-accent", finalColor);
+  applyAccentColor(finalColor);
+
+  accentColorMessage.textContent =
+    "Accent color applied successfully!";
 });
 
 window.matchMedia("(prefers-color-scheme: dark)")

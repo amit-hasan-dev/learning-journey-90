@@ -366,6 +366,36 @@
 
     <p id="deleteAccountMessage" class="muted" aria-live="polite"></p>
   </article>
+
+  <article class="panel account-deletion-reauth" id="accountDeletionReauth" hidden>
+    <h3>Verify Your Identity</h3>
+    <p class="muted">
+      For your security, verify your identity before continuing.
+    </p>
+
+    <form id="deleteAccountPasswordForm" hidden>
+      <label for="deleteAccountPassword">Current Password</label>
+      <input
+        type="password"
+        id="deleteAccountPassword"
+        autocomplete="current-password"
+        required
+      >
+      <button type="submit" class="secondary" id="verifyDeletePassword">
+        Verify Password
+      </button>
+    </form>
+
+    <button type="button" class="secondary" id="reauthDeleteGoogle" hidden>
+      Verify with Google
+    </button>
+
+    <button type="button" class="secondary" id="cancelAccountDeletion">
+      Cancel
+    </button>
+
+    <p id="deleteAccountReauthMessage" class="muted" aria-live="polite"></p>
+  </article>
   
   <button type="button" class="secondary" id="backToProfile">
     ← Back to Profile

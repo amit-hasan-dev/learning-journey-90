@@ -765,3 +765,57 @@ html[data-theme="dark"] #saveProfilePicture {
 }
 
 /* ===== END PROFILE BUTTON LIQUID GLASS ===== */
+/* ===== LIQUID GLASS: PROFILE & OVERVIEW PANELS ===== */
+
+#profile > article.panel:nth-of-type(n+2),
+#overview .columns > article.panel {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.82),
+      rgba(255, 255, 255, 0.42) 55%,
+      rgba(220, 235, 250, 0.55)
+    );
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow:
+    0 10px 30px rgba(20, 38, 56, 0.10),
+    inset 0 1px 2px rgba(255, 255, 255, 0.95),
+    inset 0 -1px 1px rgba(120, 150, 180, 0.15);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+}
+
+/* Accent Text Contrast: Light Mode */
+
+#profile > article.panel:nth-of-type(4) .link,
+#overview .columns > article.panel:nth-child(2) .link {
+  color: color-mix(in srgb, var(--accent) 65%, #182638);
+  font-weight: 800;
+}
+
+/* Dark Theme Glass */
+
+html[data-theme="dark"] #profile > article.panel:nth-of-type(n+2),
+html[data-theme="dark"] #overview .columns > article.panel {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(120, 160, 200, 0.22),
+      rgba(255, 255, 255, 0.07) 45%,
+      rgba(35, 55, 80, 0.48)
+    );
+  border: 1px solid rgba(190, 215, 245, 0.24);
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.24),
+    inset 0 1px 2px rgba(255, 255, 255, 0.22),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.12);
+}
+
+/* Accent Text Contrast: Dark Mode */
+
+html[data-theme="dark"] #profile > article.panel:nth-of-type(4) .link,
+html[data-theme="dark"] #overview .columns > article.panel:nth-child(2) .link {
+  color: color-mix(in srgb, var(--accent) 72%, #ffffff);
+}
+
+/* ===== END PROFILE & OVERVIEW LIQUID GLASS ===== */

@@ -352,6 +352,8 @@ async function loadUserProfile(session) {
     profileBio: "Not set",
     profileCountry: "Not set",
     profileUserId: "Loading...",
+    profileCreatedAt: "Loading...",
+    profileProvider: "Loading...",
     profileProvider: "Loading...",
     profileVerification: "Loading...",
     profileStatus: "Loading..."

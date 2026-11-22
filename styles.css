@@ -930,3 +930,77 @@ html[data-theme="dark"] #cancelEditProfile {
 }
 
 /* ===== END FINAL SELECTED LIQUID GLASS ===== */
+
+/* ===== ACCOUNT DELETION: LIQUID GLASS ===== */
+
+.danger-zone {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 95, 95, 0.10),
+      rgba(255, 255, 255, 0.10) 50%,
+      rgba(220, 65, 65, 0.06)
+    );
+  border: 1px solid rgba(220, 80, 80, 0.28);
+  border-radius: 18px;
+  box-shadow:
+    0 8px 28px rgba(120, 30, 30, 0.08),
+    inset 0 1px 2px rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(22px) saturate(170%);
+  -webkit-backdrop-filter: blur(22px) saturate(170%);
+}
+
+#beginAccountDeletion {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(235, 75, 75, 0.78),
+      rgba(180, 35, 45, 0.62)
+    );
+  color: #fff;
+  border: 1px solid rgba(255, 180, 180, 0.42);
+  border-radius: 12px;
+  box-shadow:
+    0 6px 18px rgba(180, 35, 45, 0.18),
+    inset 0 1px 2px rgba(255, 255, 255, 0.30);
+  backdrop-filter: blur(18px) saturate(170%);
+  -webkit-backdrop-filter: blur(18px) saturate(170%);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#beginAccountDeletion:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 9px 22px rgba(180, 35, 45, 0.25);
+}
+
+#beginAccountDeletion:active {
+  transform: scale(0.975);
+}
+
+/* Dark Theme */
+html[data-theme="dark"] .danger-zone {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(190, 65, 75, 0.20),
+      rgba(35, 45, 65, 0.42) 55%,
+      rgba(120, 35, 45, 0.22)
+    );
+  border-color: rgba(245, 130, 140, 0.25);
+  box-shadow:
+    0 8px 28px rgba(0, 0, 0, 0.22),
+    inset 0 1px 2px rgba(255, 255, 255, 0.12);
+}
+
+html[data-theme="dark"] #beginAccountDeletion {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(220, 75, 85, 0.72),
+      rgba(145, 35, 50, 0.68)
+    );
+  border-color: rgba(255, 170, 175, 0.30);
+  color: #fff;
+}
+
+/* ===== END ACCOUNT DELETION GLASS ===== */

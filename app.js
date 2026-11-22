@@ -1016,3 +1016,133 @@ profileEmailForm.addEventListener("submit", async (event) => {
 
 // ===== END PROFILE EMAIL CHANGE =====
 // ===== END ACCOUNT & SECURITY =====
+// ===== THEME AND ACCENT COLOR SETTINGS =====
+
+const themeMode = document.getElementById("themeMode");
+const accentColorPicker =
+  document.getElementById("accentColorPicker");
+const accentColorHex =
+  document.getElementById("accentColorHex");
+
+const savedTheme =
+  localStorage.getItem("lj90-theme") || "system";
+
+const savedAccent =
+  localStorage.getItem("lj90-accent") || "#315f84";
+
+function getThemePreference() {
+  if (savedTheme === "system") {
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
+  }
+
+  return savedTheme;
+}
+
+function applyTheme(mode) {
+  const actualTheme =
+    mode === "system"
+      ? (window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light")
+      : mode;
+
+  document.documentElement.setAttribute(
+    "data-theme",
+    actualTheme
+  );
+}
+
+function applyAccentColor(hex) {
+  const root = document.documentElement;
+
+  const red = parseInt(hex.slice(1, 3), 16);
+  const green = parseInt(hex.slice(3, 5), 16);
+  const blue = parseInt(hex.slice(5, 7), 16);
+
+  const isDark =
+    root.getAttribute("data-theme") === "dark";
+
+  const blendTarget = isDark ? 255 : 0;
+  const blendAmount = 0.35;
+
+  const adjusted = [red, green, blue].map(value =>
+    Math.round(
+      value * (1 - blendAmount) +
+      blendTarget * blendAmount
+    )
+  );
+
+  const adjustedHex =
+    "#" + adjusted
+      .map(value => value.toString(16).padStart(2, "0"))
+      .join("");
+
+  const luminance =
+    (0.299 * red + 0.587 * green + 0.114 * blue) / 255;
+
+  const contrastColor =
+    luminance > 0.58 ? "#182638" : "#ffffff";
+
+  root.style.setProperty("--accent", hex);
+  root.style.setProperty("--blue", adjustedHex);
+  root.style.setProperty("--mint", hex);
+  root.style.setProperty("--accent-contrast", contrastColor);
+  root.style.setProperty(
+    "--accent-soft",
+    isDark
+      ? "rgba(255,255,255,0.09)"
+      : "rgba(0,0,0,0.05)"
+  );
+}
+
+function saveAppearanceSettings() {
+  localStorage.setItem("lj90-theme", themeMode.value);
+  localStorage.setItem(
+    "lj90-accent",
+    accentColorPicker.value
+  );
+}
+
+themeMode.value = savedTheme;
+accentColorPicker.value = savedAccent;
+accentColorHex.value = savedAccent;
+
+applyTheme(savedTheme);
+applyAccentColor(savedAccent);
+
+themeMode.addEventListener("change", () => {
+  localStorage.setItem("lj90-theme", themeMode.value);
+  applyTheme(themeMode.value);
+  applyAccentColor(accentColorPicker.value);
+});
+
+accentColorPicker.addEventListener("input", () => {
+  const color = accentColorPicker.value;
+
+  accentColorHex.value = color;
+  localStorage.setItem("lj90-accent", color);
+
+  applyAccentColor(color);
+});
+
+accentColorHex.addEventListener("input", () => {
+  const color = accentColorHex.value.trim();
+
+  if (/^#[0-9a-fA-F]{6}$/.test(color)) {
+    accentColorPicker.value = color;
+    localStorage.setItem("lj90-accent", color);
+    applyAccentColor(color);
+  }
+});
+
+window.matchMedia("(prefers-color-scheme: dark)")
+  .addEventListener("change", () => {
+    if (themeMode.value === "system") {
+      applyTheme("system");
+      applyAccentColor(accentColorPicker.value);
+    }
+  });
+
+// ===== END THEME AND ACCENT COLOR SETTINGS =====

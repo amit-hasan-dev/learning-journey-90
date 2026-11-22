@@ -388,3 +388,10 @@ main {
 }
 
 /* ===== END REMOVE PROFILE BUTTON SPACING ===== */
+/* ===== EMAIL UPDATE BUTTON SPACING ===== */
+
+#profileEmailForm button {
+  margin-top: 12px;
+}
+
+/* ===== END EMAIL UPDATE BUTTON SPACING ===== */

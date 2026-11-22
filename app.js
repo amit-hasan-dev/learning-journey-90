@@ -952,4 +952,53 @@ profilePasswordForm.addEventListener("submit", async (event) => {
     "Password updated successfully!";
 });
 
+// ===== PROFILE EMAIL CHANGE =====
+
+const profileEmailForm =
+  document.getElementById("profileEmailForm");
+
+const profileEmailMessage =
+  document.getElementById("profileEmailMessage");
+
+profileEmailForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  const newEmail =
+    document.getElementById("profileNewEmail").value
+      .trim()
+      .toLowerCase();
+
+  profileEmailMessage.textContent = "Sending verification request...";
+
+  const { data, error } = await supabaseClient.auth.getUser();
+
+  if (error || !data.user) {
+    profileEmailMessage.textContent =
+      "Please sign in again.";
+    return;
+  }
+
+  if (newEmail === data.user.email.toLowerCase()) {
+    profileEmailMessage.textContent =
+      "This is already your current email address.";
+    return;
+  }
+
+  const { error: updateError } =
+    await supabaseClient.auth.updateUser({
+      email: newEmail
+    });
+
+  if (updateError) {
+    profileEmailMessage.textContent = updateError.message;
+    return;
+  }
+
+  profileEmailForm.reset();
+
+  profileEmailMessage.textContent =
+    "Verification email sent. Please check your inbox and complete verification before using your new email.";
+});
+
+// ===== END PROFILE EMAIL CHANGE =====
 // ===== END ACCOUNT & SECURITY =====

@@ -1123,15 +1123,6 @@ themeMode.addEventListener("change", () => {
 });
 
 accentColorPicker.addEventListener("input", () => {
-  const color = accentColorPicker.value;
-
-  accentColorHex.value = color;
-  localStorage.setItem("lj90-accent", color);
-
-  applyAccentColor(color);
-});
-
-accentColorPicker.addEventListener("input", () => {
   accentColorHex.value =
     accentColorPicker.value;
   accentColorMessage.textContent =

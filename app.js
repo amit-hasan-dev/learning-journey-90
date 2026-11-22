@@ -367,6 +367,7 @@ async function loadUserProfile(session) {
   const user = session.user;
   document.getElementById("profileUserId").textContent =
     user.id;
+  
   const { data, error } = await supabaseClient
     .from("profiles")
     .select("full_name, display_name, bio, country, avatar_path")

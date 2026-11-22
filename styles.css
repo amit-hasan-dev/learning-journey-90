@@ -658,3 +658,22 @@ html[data-theme="dark"] #space .panel {
 }
 
 /* ===== END TRACKER & MY SPACE LIQUID GLASS ===== */
+/* ===== LESSON DROPDOWN DARK MODE FIX ===== */
+
+#daySelect {
+  margin-bottom: 16px;
+}
+
+html[data-theme="dark"] #daySelect {
+  background: #1c2737;
+  color: #e5edf5;
+  border-color: #52647a;
+  color-scheme: dark;
+}
+
+html[data-theme="dark"] #daySelect option {
+  background: #1c2737;
+  color: #e5edf5;
+}
+
+/* ===== END LESSON DROPDOWN FIX ===== */

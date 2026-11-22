@@ -819,3 +819,114 @@ html[data-theme="dark"] #overview .columns > article.panel:nth-child(2) .link {
 }
 
 /* ===== END PROFILE & OVERVIEW LIQUID GLASS ===== */
+/* ===== FINAL LIQUID GLASS: SELECTED ELEMENTS ===== */
+
+/* Authentication: Sign In & Google Only */
+#loginForm button[type="submit"],
+#googleLogin {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.82),
+      rgba(220, 235, 250, 0.42)
+    );
+  color: var(--ink);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow:
+    0 8px 22px rgba(20, 38, 56, 0.12),
+    inset 0 1px 2px rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(22px) saturate(180%);
+  -webkit-backdrop-filter: blur(22px) saturate(180%);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Profile Overview, Edit Form & Picture Editor */
+#profile > article.panel:first-of-type,
+#editProfileForm,
+#profilePictureEditor {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.82),
+      rgba(255, 255, 255, 0.42) 55%,
+      rgba(220, 235, 250, 0.55)
+    );
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow:
+    0 10px 30px rgba(20, 38, 56, 0.12),
+    inset 0 1px 2px rgba(255, 255, 255, 0.95),
+    inset 0 -1px 1px rgba(120, 150, 180, 0.15);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+}
+
+/* Selected Action Buttons */
+#saveNote,
+#saveGithub,
+#quiz,
+#export,
+#applyAccentColor,
+#backToProfile,
+#backFromPreferences,
+#cancelEditProfile {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.82),
+      rgba(220, 235, 250, 0.42)
+    );
+  color: var(--ink);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow:
+    0 6px 18px rgba(20, 38, 56, 0.10),
+    inset 0 1px 2px rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Button Interaction */
+#loginForm button[type="submit"]:active,
+#googleLogin:active,
+#saveNote:active,
+#saveGithub:active,
+#quiz:active,
+#export:active,
+#applyAccentColor:active,
+#backToProfile:active,
+#backFromPreferences:active,
+#cancelEditProfile:active {
+  transform: scale(0.975);
+}
+
+/* Dark Theme */
+html[data-theme="dark"] #loginForm button[type="submit"],
+html[data-theme="dark"] #googleLogin,
+html[data-theme="dark"] #profile > article.panel:first-of-type,
+html[data-theme="dark"] #editProfileForm,
+html[data-theme="dark"] #profilePictureEditor,
+html[data-theme="dark"] #saveNote,
+html[data-theme="dark"] #saveGithub,
+html[data-theme="dark"] #quiz,
+html[data-theme="dark"] #export,
+html[data-theme="dark"] #applyAccentColor,
+html[data-theme="dark"] #backToProfile,
+html[data-theme="dark"] #backFromPreferences,
+html[data-theme="dark"] #cancelEditProfile {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(120, 160, 200, 0.24),
+      rgba(255, 255, 255, 0.07) 50%,
+      rgba(35, 55, 80, 0.48)
+    );
+  color: #e5edf5;
+  border-color: rgba(190, 215, 245, 0.28);
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.22),
+    inset 0 1px 2px rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+}
+
+/* ===== END FINAL SELECTED LIQUID GLASS ===== */

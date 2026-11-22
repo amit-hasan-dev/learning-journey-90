@@ -677,3 +677,91 @@ html[data-theme="dark"] #daySelect option {
 }
 
 /* ===== END LESSON DROPDOWN FIX ===== */
+/* ===== LIQUID GLASS: PROFILE ACTION BUTTONS ===== */
+
+#logout,
+#chooseProfilePhoto,
+#takeProfilePhoto,
+#removeProfilePicture,
+#rotateProfilePicture,
+#saveProfilePicture,
+#cancelProfilePicture,
+#editProfile,
+#backToProfile {
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  box-shadow:
+    0 6px 18px rgba(20, 38, 56, 0.10),
+    inset 0 1px 2px rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(18px) saturate(180%);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#chooseProfilePhoto,
+#takeProfilePhoto,
+#removeProfilePicture,
+#rotateProfilePicture,
+#cancelProfilePicture,
+#editProfile,
+#backToProfile,
+#logout {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.78),
+      rgba(220, 235, 250, 0.38)
+    );
+  color: var(--ink);
+}
+
+#saveProfilePicture {
+  background:
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--accent) 85%, white),
+      var(--accent)
+    );
+  color: var(--accent-contrast);
+}
+
+#logout:active,
+#chooseProfilePhoto:active,
+#takeProfilePhoto:active,
+#removeProfilePicture:active,
+#rotateProfilePicture:active,
+#saveProfilePicture:active,
+#cancelProfilePicture:active,
+#editProfile:active,
+#backToProfile:active {
+  transform: scale(0.97);
+}
+
+/* Dark Theme Glass Buttons */
+
+html[data-theme="dark"] #logout,
+html[data-theme="dark"] #chooseProfilePhoto,
+html[data-theme="dark"] #takeProfilePhoto,
+html[data-theme="dark"] #removeProfilePicture,
+html[data-theme="dark"] #rotateProfilePicture,
+html[data-theme="dark"] #cancelProfilePicture,
+html[data-theme="dark"] #editProfile,
+html[data-theme="dark"] #backToProfile {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(120, 160, 200, 0.24),
+      rgba(255, 255, 255, 0.07) 50%,
+      rgba(35, 55, 80, 0.48)
+    );
+  color: #e5edf5;
+  border-color: rgba(190, 215, 245, 0.28);
+  box-shadow:
+    0 6px 18px rgba(0, 0, 0, 0.22),
+    inset 0 1px 2px rgba(255, 255, 255, 0.18);
+}
+
+html[data-theme="dark"] #saveProfilePicture {
+  border-color: rgba(190, 215, 245, 0.28);
+}
+
+/* ===== END PROFILE BUTTON LIQUID GLASS ===== */

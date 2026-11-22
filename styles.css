@@ -464,3 +464,66 @@ html[data-theme="dark"] footer {
 }
 
 /* ===== END DARK THEME FOUNDATION ===== */
+/* ===== GLOBAL ACCENT COLOR APPLICATION ===== */
+
+.primary,
+.sidebar-toggle {
+  background: var(--accent);
+  color: var(--accent-contrast);
+  border-color: var(--accent);
+}
+
+.primary:hover,
+.sidebar-toggle:hover {
+  filter: brightness(0.92);
+}
+
+nav button.active {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.bar i {
+  background: var(--accent);
+}
+
+.link,
+.row a,
+footer b {
+  color: var(--accent);
+}
+
+#profileAvatar,
+#profilePicturePreview {
+  border-color: var(--accent);
+}
+
+#profilePictureZoom,
+.check input {
+  accent-color: var(--accent);
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.app-sidebar {
+  background: var(--bg);
+}
+
+.sidebar-profile-link {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+#accentColorPicker {
+  height: 52px;
+  padding: 5px;
+  cursor: pointer;
+}
+
+/* ===== END GLOBAL ACCENT COLOR APPLICATION ===== */

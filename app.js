@@ -86,6 +86,35 @@ const supabaseClient = window.supabase.createClient(
   }
 );
 
+const testDeleteAccountFunctionButton = document.getElementById("testDeleteAccountFunction");
+const deleteAccountTestMessage = document.getElementById("deleteAccountTestMessage");
+
+if (testDeleteAccountFunctionButton && deleteAccountTestMessage) {
+  testDeleteAccountFunctionButton.addEventListener("click", async () => {
+    testDeleteAccountFunctionButton.disabled = true;
+    deleteAccountTestMessage.textContent = "Testing secure connection...";
+
+    try {
+      const { data, error } = await supabaseClient.functions.invoke("delete-account", {
+        body: { confirmation: "TEST" }
+      });
+
+      if (error) throw error;
+
+      deleteAccountTestMessage.textContent =
+        data?.success && data?.testMode
+          ? "Safe test successful. Authentication verified. No data was deleted."
+          : "Unexpected response. No deletion was requested.";
+    } catch (error) {
+      console.error("Safe account deletion test failed:", error);
+      deleteAccountTestMessage.textContent =
+        "Test failed: " + (error.message || "Unknown error");
+    } finally {
+      testDeleteAccountFunctionButton.disabled = false;
+    }
+  });
+}
+
 function updateAuthView(session) {
   const authGate = document.getElementById("authGate");
   authGate.hidden = !!session;document.getElementById("logout").hidden = !session;

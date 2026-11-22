@@ -354,7 +354,6 @@ async function loadUserProfile(session) {
     profileUserId: "Loading...",
     profileCreatedAt: "Loading...",
     profileProvider: "Loading...",
-    profileProvider: "Loading...",
     profileVerification: "Loading...",
     profileStatus: "Loading..."
   };

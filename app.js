@@ -368,6 +368,14 @@ async function loadUserProfile(session) {
   const user = session.user;
   document.getElementById("profileUserId").textContent =
     user.id;
+  const createdAt = new Date(user.created_at);
+
+  document.getElementById("profileCreatedAt").textContent =
+    createdAt.toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "long",
+      year: "numeric"
+    });
   
   const { data, error } = await supabaseClient
     .from("profiles")

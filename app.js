@@ -876,7 +876,21 @@ document
   .addEventListener("click", () => {
     go("profile");
   });
+// ===== PREFERENCES NAVIGATION =====
 
+document
+  .getElementById("profilePreferencesButton")
+  .addEventListener("click", () => {
+    go("preferences");
+  });
+
+document
+  .getElementById("backFromPreferences")
+  .addEventListener("click", () => {
+    go("profile");
+  });
+
+// ===== END PREFERENCES NAVIGATION =====
 // ===== PROFILE PASSWORD CHANGE =====
 
 const profilePasswordForm =

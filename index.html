@@ -291,6 +291,72 @@
 </section>
 <!-- ===== END USER PROFILE: OVERVIEW ===== -->
 
+  <!-- ===== ACCOUNT & SECURITY PAGE ===== -->
+<section id="account-security" class="view">
+  <div class="heading">
+    <div>
+      <small>YOUR ACCOUNT</small>
+      <h2>Account & Security</h2>
+    </div>
+  </div>
+
+  <article class="panel">
+    <h3>Account Security</h3>
+    <p>Manage your password, email and account security.</p>
+
+    <h4>Change Password</h4>
+    <p id="passwordChangeInfo" class="muted"></p>
+
+    <form id="profilePasswordForm">
+      <label for="profileNewPassword">New Password</label>
+      <input
+        type="password"
+        id="profileNewPassword"
+        minlength="8"
+        required
+      >
+
+      <label for="profileConfirmPassword">Confirm New Password</label>
+      <input
+        type="password"
+        id="profileConfirmPassword"
+        minlength="8"
+        required
+      >
+
+      <button type="submit" class="primary">
+        Update Password
+      </button>
+
+      <p id="profilePasswordMessage" class="muted"></p>
+    </form>
+  </article>
+
+  <article class="panel">
+    <h3>Change Email Address</h3>
+
+    <form id="profileEmailForm">
+      <label for="profileNewEmail">New Email Address</label>
+      <input
+        type="email"
+        id="profileNewEmail"
+        required
+      >
+
+      <button type="submit" class="primary">
+        Update Email
+      </button>
+
+      <p id="profileEmailMessage" class="muted"></p>
+    </form>
+  </article>
+
+  <button type="button" class="secondary" id="backToProfile">
+    ← Back to Profile
+  </button>
+</section>
+<!-- ===== END ACCOUNT & SECURITY PAGE ===== -->
+  
 <footer>
 Made for consistent learning, not rushed learning. <b>Keep showing up.</b></footer></main><div id="toast"></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
